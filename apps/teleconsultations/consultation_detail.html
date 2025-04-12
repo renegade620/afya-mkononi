@@ -1,0 +1,89 @@
+{% extends 'teleconsultations/base.html' %}
+
+{% block teleteleconsultations_title %}Consultation Details{% endblock %}
+
+{% block teleteleconsultations_content %}
+<div class="consultation-detail">
+    <div class="consultation-header">
+        <h3>Consultation with Dr. {{ consultation.doctor.user.get_full_name }}</h3>
+        <span class="status-badge {{ consultation.status }}">{{ consultation.get_status_display }}</span>
+    </div>
+    
+    <div class="consultation-info">
+        <div class="info-item">
+            <span class="info-label">Date:</span>
+            <span class="info-value">{{ consultation.date }}</span>
+        </div>
+        <div class="info-item">
+            <span class="info-label">Time:</span>
+            <span class="info-value">{{ consultation.start_time }} - {{ consultation.end_time }}</span>
+        </div>
+        <div class="info-item">
+            <span class="info-label">Reason:</span>
+            <span class="info-value">{{ consultation.reason }}</span>
+        </div>
+        
+        {% if consultation.notes %}
+        <div class="info-item">
+            <span class="info-label">Doctor's Notes:</span>
+            <span class="info-value">{{ consultation.notes }}</span>
+        </div>
+        {% endif %}
+        
+        {% if consultation.prescription %}
+        <div class="info-item">
+            <span class="info-label">Prescription:</span>
+            <span class="info-value">{{ consultation.prescription }}</span>
+        </div>
+        {% endif %}
+    </div>
+    
+    <div class="consultation-actions">
+        {% if consultation.is_upcoming %}
+            {% if consultation.meeting_url %}
+            <a href="{{ consultation.meeting_url }}" class="btn btn-primary" target="_blank">
+                <i class="fas fa-video"></i> Join Consultation
+            </a>
+            {% endif %}
+            
+            <button class="btn btn-danger cancel-consultation" data-consultation-id="{{ consultation.id }}">
+                <i class="fas fa-times"></i> Cancel Consultation
+            </button>
+        {% endif %}
+    </div>
+</div>
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    const cancelButtons = document.querySelectorAll('.cancel-consultation');
+    
+    cancelButtons.forEach(button => {
+        button.addEventListener('click', function() {
+            const consultationId = this.getAttribute('data-consultation-id');
+            
+            if (confirm('Are you sure you want to cancel this consultation?')) {
+                fetch(`/teleconsultations/teleconsultations/${consultationId}/cancel/`, {
+                    method: 'POST',
+                    headers: {
+                        'X-CSRFToken': '{{ csrf_token }}',
+                        'Content-Type': 'application/json',
+                    },
+                })
+                .then(response => response.json())
+                .then(data => {
+                    if (data.success) {
+                        window.location.reload();
+                    } else {
+                        alert('Error: ' + data.error);
+                    }
+                })
+                .catch(error => {
+                    console.error('Error:', error);
+                    alert('An error occurred while cancelling the consultation.');
+                });
+            }
+        });
+    });
+});
+</script>
+{% endblock %}

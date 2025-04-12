@@ -1,0 +1,13 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="teleteleconsultations-container">
+    <div class="teleteleconsultations-header">
+        <h2>{% block teleteleconsultations_title %}{% endblock %}</h2>
+    </div>
+    {% include 'partials/messages.html' %}
+    <div class="teleteleconsultations-content">
+        {% block teleteleconsultations_content %}{% endblock %}
+    </div>
+</div>
+{% endblock %}
