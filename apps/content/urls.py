@@ -1,7 +1,6 @@
 from django.urls import path
-from . import views
+from django.http import HttpResponse
 
 urlpatterns = [
-    path('', views.index, name='content_index'),
-    path('<int:id>/', views.detail, name='content_detail'),
+    path('', lambda request: HttpResponse("Content app root"), name='content-root'),
 ]

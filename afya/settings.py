@@ -3,16 +3,25 @@ from re import DEBUG
 
 BASE_DIR = Path(__file__).resolve().parent.parent
 
+# DATABASES = {
+#     'default': {
+#         'ENGINE': 'django.db.backends.mysql',
+#         'NAME': 'afyamkononi',
+#         'USER': 'root',
+#         'PASSWORD':'Shamandah2_',
+#         'HOST':'localhost',
+#         'PORT':'3306',
+#     }
+# }
+
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.mysql',
-        'NAME': 'afyamkononi',
-        'USER': 'root',
-        'PASSWORD':'Shamandah2_',
-        'HOST':'localhost',
-        'PORT':'3306',
+        'ENGINE': 'django.db.backends.sqlite3',
+        'NAME': BASE_DIR / 'db.sqlite3',
     }
 }
+
+
 DEBUG = True
 ALLOWED_HOSTS = []
 INSTALLED_APPS = [
@@ -46,7 +55,7 @@ SECRET_KEY = 'oq)=*ksr!6#59fql$#x!%gk0=_i6yf)ubh@7af^rmh(@*y+k6y'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [BASE_DIR / "templates"],  # Add the central templates directory
+        'DIRS': [BASE_DIR / "templates"],  # Ensure this points to the project-level templates directory
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [

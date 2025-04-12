@@ -1,7 +1,6 @@
 from django.urls import path
-from . import views
+from django.http import HttpResponse
 
 urlpatterns = [
-    path('', views.index, name='chatbot_index'),
-    path('chat/<str:session_id>/', views.chat, name='chatbot_chat'),
+    path('', lambda request: HttpResponse("Chatbot app root"), name='chatbot-root'),
 ]

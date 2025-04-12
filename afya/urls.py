@@ -9,8 +9,9 @@ def landing_page(request):
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('', landing_page, name='landing_page'),  # Root URL for the landing page
-    path('chatbot/', include('apps.chatbot.urls')),
     path('content/', include('apps.content.urls')),
     path('users/', include('apps.users.urls')),
-    path('teleconsultations/', include('apps.teleconsultations.urls')),  # Corrected path
+    path('teleconsultations/', include('apps.teleconsultations.urls')),
+    path('chatbot/', include('apps.chatbot.urls')),
+    path('wearables/', include('apps.wearables.urls')),
 ]

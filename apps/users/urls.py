@@ -1,7 +1,6 @@
 from django.urls import path
-from . import views
+from django.http import HttpResponse
 
 urlpatterns = [
-    path('', views.index, name='users_index'),
-    path('<int:id>/', views.profile, name='user_profile'),
+    path('', lambda request: HttpResponse("Users app root"), name='users-root'),
 ]
